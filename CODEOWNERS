@@ -1,0 +1,7 @@
+# All guide changes require a maintainer review.
+# Guide files at the repo root.
+/*.json     @AmrDab
+
+# CI + scripts changes need extra scrutiny — they affect every install.
+/.github/   @AmrDab
+/scripts/   @AmrDab

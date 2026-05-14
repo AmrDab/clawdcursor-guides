@@ -1,0 +1,30 @@
+name: Report a broken guide
+description: A guide produces wrong behavior, has stale shortcuts, or fails for a real task.
+title: '[bug] <app>: <one-line summary>'
+labels: [bug]
+body:
+  - type: input
+    id: app
+    attributes:
+      label: App key
+      placeholder: youtube
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What went wrong
+      description: |
+        Steps to reproduce, what you expected, what happened instead.
+        If clawdcursor was driving, paste the relevant log line.
+    validations:
+      required: true
+
+  - type: textarea
+    id: fix
+    attributes:
+      label: Suggested fix (optional)
+      description: |
+        Which shortcut / workflow / tip is wrong, and what should it say?
+        If you can submit a PR with the fix, even better — link it here.

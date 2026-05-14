@@ -1,0 +1,46 @@
+name: aggregate-index
+
+on:
+  # Nightly at 06:00 UTC.
+  schedule:
+    - cron: '0 6 * * *'
+  # Manual rebuild + on merge.
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '*.json'
+      # Don't recurse — index.json updates would loop.
+      - '!index.json'
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Rebuild index.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: node scripts/aggregate-index.mjs
+
+      - name: Commit index.json if changed
+        run: |
+          if git diff --quiet -- index.json; then
+            echo "index.json unchanged."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.json
+          git commit -m "chore(index): refresh ratings + trust levels"
+          git push

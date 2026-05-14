@@ -1,0 +1,38 @@
+name: Vote on a guide
+description: 👍 / 👎 a guide. Reactions on the issue body count toward the rating.
+title: 'vote: <app>'
+labels: [vote]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## How voting works
+
+        1. Title this issue exactly `vote: <app-key>` (e.g. `vote: youtube`).
+        2. React to the issue body with 👍 to upvote, 👎 to downvote.
+        3. The nightly aggregator (`.github/workflows/aggregate.yml`) reads
+           the reaction counts and writes them into `index.json`. Every
+           clawdcursor install reads from there.
+
+        One vote-issue exists per guide. Maintainers seed them when guides
+        are first merged. Do not open a duplicate vote-issue for a guide
+        that already has one — comment on the existing one instead.
+
+        Trust level (`verified` / `community` / `experimental`) is set via
+        a label on this issue by maintainers. Don't add `trust:*` labels
+        yourself; they're managed during PR review.
+
+  - type: input
+    id: app
+    attributes:
+      label: App key
+      description: The `app` field of the guide JSON. Lowercase, no spaces.
+      placeholder: youtube
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Anything worth saying about this guide's quality, gaps, or use cases.
