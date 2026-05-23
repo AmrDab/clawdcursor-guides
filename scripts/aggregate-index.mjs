@@ -32,7 +32,7 @@
  *   GH_REPO       — "owner/repo", default "AmrDab/clawdcursor-guides"
  */
 
-import { readFileSync, writeFileSync, readdirSync, createHash } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import * as crypto from 'node:crypto';
 
 const REPO = process.env.GH_REPO || 'AmrDab/clawdcursor-guides';
