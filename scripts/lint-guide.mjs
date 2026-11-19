@@ -178,9 +178,11 @@ function lintV2(raw, fileName, findings) {
     } else {
       raw.domainHints.forEach((h, i) => {
         // A hostname, optionally with a path prefix where one host serves several apps ("docs.google.com/spreadsheets").
+        // "*." in front: any subdomain, for apps on a per-company host ("*.atlassian.net/jira").
         const [host, ...path] = typeof h === 'string' ? h.split('/') : [''];
-        if (typeof h !== 'string' || !VALID_DOMAIN_RE.test(host) || !path.every(p => /^[a-z0-9._~-]+$/i.test(p))) {
-          err('schema.domainHints', `domainHints[${i}] must be a hostname, optionally with a path prefix: "docs.google.com" or "docs.google.com/spreadsheets"`, `domainHints[${i}]`);
+        const bare = host.startsWith('*.') ? host.slice(2) : host;
+        if (typeof h !== 'string' || !VALID_DOMAIN_RE.test(bare) || !path.every(p => /^[a-z0-9._~-]+$/i.test(p))) {
+          err('schema.domainHints', `domainHints[${i}] must be a hostname ("*." for any subdomain), optionally with a path prefix: "docs.google.com", "docs.google.com/spreadsheets", "*.atlassian.net/jira"`, `domainHints[${i}]`);
         }
       });
     }
