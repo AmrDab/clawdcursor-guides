@@ -74,31 +74,26 @@ const DANGEROUS_PROSE = [
 const URL_OR_PATH_RE = /^(?:https?:\/\/|\/|\.\/|\.\.\/)/i;
 const VALID_DOMAIN_RE = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/i;
 
+/**
+ * The text the patterns see: NFKC, no format characters (zero-width, bidi marks), every run of whitespace one space, so a
+ * split or look-alike phrase cannot slip past them. clawdcursor's client lint normalizes the same way.
+ */
+export const normalizeText = s => s.normalize('NFKC').replace(/\p{Cf}/gu, '').replace(/\s+/g, ' ');
+
+/** Every string in the guide, object keys included (workflow ids, layout regions, shortcut names): all of it reaches an agent. */
 function collectStrings(guide) {
   const out = [];
-  for (let i = 0; i < (guide.tips ?? []).length; i++) {
-    if (typeof guide.tips[i] === 'string') {
-      out.push({ value: guide.tips[i], location: `tips[${i}]` });
-    }
-  }
-  for (const [key, wf] of Object.entries(guide.workflows ?? {})) {
-    if (typeof wf === 'string') {
-      out.push({ value: wf, location: `workflows.${key}` });
-    } else if (wf && typeof wf === 'object') {
-      if (typeof wf.name === 'string') out.push({ value: wf.name, location: `workflows.${key}.name` });
-      for (let i = 0; i < (wf.steps ?? []).length; i++) {
-        if (typeof wf.steps[i].note === 'string') {
-          out.push({ value: wf.steps[i].note, location: `workflows.${key}.steps[${i}].note` });
-        }
+  const walk = (v, location) => {
+    if (typeof v === 'string') out.push({ value: normalizeText(v), location });
+    else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${location}[${i}]`));
+    else if (v && typeof v === 'object') {
+      for (const [k, x] of Object.entries(v)) {
+        out.push({ value: normalizeText(k), location: `${location}.${k} (key)` });
+        walk(x, `${location}.${k}`);
       }
     }
-  }
-  for (const [region, desc] of Object.entries(guide.layout ?? {})) {
-    if (typeof desc === 'string') out.push({ value: desc, location: `layout.${region}` });
-  }
-  for (const [key, prose] of Object.entries(guide.learnedWorkflows ?? {})) {
-    if (typeof prose === 'string') out.push({ value: prose, location: `learnedWorkflows.${key}` });
-  }
+  };
+  walk(guide, '$');
   return out;
 }
 
