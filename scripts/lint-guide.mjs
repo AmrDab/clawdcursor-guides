@@ -218,6 +218,17 @@ function lintV2(raw, fileName, findings) {
     }
   }
 
+  // The keys shown in clawdcursor's hint when an agent opens the app: at most 8, each a shortcut, no repeats.
+  if (raw.essentials !== undefined) {
+    if (!Array.isArray(raw.essentials) || raw.essentials.some(c => typeof c !== 'string')) {
+      err('schema.essentials', 'essentials must be an array of shortcut names', '$.essentials');
+    } else {
+      if (raw.essentials.length > 8) err('schema.essentials', `essentials has ${raw.essentials.length} names; at most 8`, '$.essentials');
+      if (new Set(raw.essentials).size !== raw.essentials.length) err('schema.essentials', 'essentials repeats a name', '$.essentials');
+      if (names) for (const c of raw.essentials) if (!names.includes(c)) err('schema.essentials', `"${c}" is not a key of shortcuts`, '$.essentials');
+    }
+  }
+
   if (raw.workflows && typeof raw.workflows === 'object' && !Array.isArray(raw.workflows)) {
     const ids = Object.keys(raw.workflows);
     if (ids.length > MAX_WORKFLOWS) err('schema.caps', `${ids.length} workflows; max ${MAX_WORKFLOWS}`, '$.workflows');

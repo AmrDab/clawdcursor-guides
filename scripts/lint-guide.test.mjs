@@ -44,7 +44,7 @@ const rules = (r) => r.findings.filter(f => f.severity === 'error').map(f => f.r
 const lint = (g, file) => lintGuide(g, file ?? `${g.app}.json`);
 
 test('good v2 web and desktop guides pass clean', () => {
-  for (const g of [web(), desktop()]) {
+  for (const g of [web(), desktop(), web({ essentials: ['compose', 'go_to_inbox', 'send'] })]) {
     const r = lint(g);
     assert.equal(r.ok, true, JSON.stringify(r.findings));
     assert.deepEqual(r.findings, []);
@@ -66,6 +66,9 @@ test('schema failures', () => {
     ['missing name', web({ name: undefined }), undefined, 'schema.name'],
     ['bad kind', web({ kind: 'mobile' }), undefined, 'schema.kind'],
     ['bad os', desktop({ os: ['windows'] }), undefined, 'schema.os'],
+    ['essentials not a shortcut', web({ essentials: ['compose', 'archive'] }), undefined, 'schema.essentials'],
+    ['essentials over 8', web({ essentials: Array(9).fill('compose') }), undefined, 'schema.essentials'],
+    ['essentials repeated', web({ essentials: ['compose', 'compose'] }), undefined, 'schema.essentials'],
     ['web without domainHints', web({ domainHints: undefined }), undefined, 'schema.domainHints'],
     ['domainHints with scheme', web({ domainHints: ['https://mail.google.com'] }), undefined, 'schema.domainHints'],
     ['domainHints path with a space', web({ domainHints: ['docs.google.com/a b'] }), undefined, 'schema.domainHints'],
