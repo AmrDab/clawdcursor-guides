@@ -31,7 +31,7 @@ const CHORD_OS_KEYS = ['default', 'darwin', 'win32', 'linux'];
 const MODIFIERS = ['mod', 'ctrl', 'shift', 'alt', 'cmd'];
 const NAMED_KEYS = new Set([
   'Return', 'Tab', 'Escape', 'Space', 'Backspace', 'Delete',
-  'Up', 'Down', 'Left', 'Right', 'Home', 'End', 'PageUp', 'PageDown',
+  'Up', 'Down', 'Left', 'Right', 'Home', 'End', 'PageUp', 'PageDown', 'Plus',
   ...Array.from({ length: 12 }, (_, i) => `F${i + 1}`),
 ]);
 const STEP_TYPES = ['pressKey', 'typeAtFocus', 'wait', 'verify'];
@@ -118,6 +118,8 @@ function chordProblem(chord, { allowCmd = true } = {}) {
       seen.add(m);
     }
     if (NAMED_KEYS.has(key)) continue;
+    // A modifier on its own is a tap (Office's KeyTips start with "alt": "alt h o"); after other modifiers it is no key.
+    if (MODIFIERS.includes(key) && tokens.length === 1 && (key !== 'cmd' || allowCmd)) continue;
     if (MODIFIERS.includes(key)) return `"${part}" ends in a modifier; a chord needs a key`;
     if ([...key].length !== 1) return `"${key}" in "${part}" is not a key (named keys: ${[...NAMED_KEYS].join(', ')})`;
     if (key !== key.toLowerCase()) return `key "${key}" in "${part}" must be lowercase; write shift+${key.toLowerCase()} for a shifted letter`;

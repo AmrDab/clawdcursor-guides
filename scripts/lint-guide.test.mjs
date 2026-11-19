@@ -132,7 +132,8 @@ test('chord grammar failures', () => {
 });
 
 test('valid chords', () => {
-  const ok = ['c', '/', '#', '?', 'g i', 'shift+u', 'mod+Return', 'mod+shift+z', 'alt+Left', 'F12', 'PageDown', 'ctrl+alt+Delete', 'g Escape'];
+  const ok = ['c', '/', '#', '?', 'g i', 'shift+u', 'mod+Return', 'mod+shift+z', 'alt+Left', 'F12', 'PageDown', 'ctrl+alt+Delete', 'g Escape',
+    'mod+Plus', 'alt h o', 'alt'];   // the + key by name; a modifier on its own is a tap (Office KeyTips)
   for (const chord of ok) {
     const r = lint(web({ shortcuts: { x: chord }, consequential: undefined }));
     assert.equal(r.ok, true, `${chord}: ${JSON.stringify(r.findings)}`);
