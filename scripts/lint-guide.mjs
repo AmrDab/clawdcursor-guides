@@ -177,8 +177,10 @@ function lintV2(raw, fileName, findings) {
       err('schema.domainHints', 'web guides need a non-empty domainHints array', '$.domainHints');
     } else {
       raw.domainHints.forEach((h, i) => {
-        if (typeof h !== 'string' || !VALID_DOMAIN_RE.test(h)) {
-          err('schema.domainHints', `domainHints[${i}] must be a bare hostname such as "docs.google.com"`, `domainHints[${i}]`);
+        // A hostname, optionally with a path prefix where one host serves several apps ("docs.google.com/spreadsheets").
+        const [host, ...path] = typeof h === 'string' ? h.split('/') : [''];
+        if (typeof h !== 'string' || !VALID_DOMAIN_RE.test(host) || !path.every(p => /^[a-z0-9._~-]+$/i.test(p))) {
+          err('schema.domainHints', `domainHints[${i}] must be a hostname, optionally with a path prefix: "docs.google.com" or "docs.google.com/spreadsheets"`, `domainHints[${i}]`);
         }
       });
     }

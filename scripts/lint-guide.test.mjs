@@ -68,6 +68,8 @@ test('schema failures', () => {
     ['bad os', desktop({ os: ['windows'] }), undefined, 'schema.os'],
     ['web without domainHints', web({ domainHints: undefined }), undefined, 'schema.domainHints'],
     ['domainHints with scheme', web({ domainHints: ['https://mail.google.com'] }), undefined, 'schema.domainHints'],
+    ['domainHints path with a space', web({ domainHints: ['docs.google.com/a b'] }), undefined, 'schema.domainHints'],
+    ['domainHints empty path segment', web({ domainHints: ['docs.google.com//x'] }), undefined, 'schema.domainHints'],
     ['desktop without processNames', desktop({ processNames: undefined }), undefined, 'schema.processNames'],
     ['processNames with .exe', desktop({ processNames: ['EXCEL.EXE'] }), undefined, 'schema.processNames'],
     ['missing shortcuts', web({ shortcuts: undefined }), undefined, 'schema.shortcuts'],
