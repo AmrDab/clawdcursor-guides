@@ -2,9 +2,7 @@
   "app": "jira",
   "name": "Jira",
   "kind": "web",
-  "domainHints": [
-    "atlassian.net"
-  ],
+  "domainHints": ["*.atlassian.net/jira", "*.atlassian.net/browse"],
   "shortcuts": {
     "show_keyboard_shortcuts": "?",
     "create_work_item": "c",
