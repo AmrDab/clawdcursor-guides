@@ -2,7 +2,7 @@
   "app": "google-docs",
   "name": "Google Docs",
   "kind": "web",
-  "domainHints": ["docs.google.com"],
+  "domainHints": ["docs.google.com/document"],
   "shortcuts": {
     "copy": "mod+c",
     "cut": "mod+x",

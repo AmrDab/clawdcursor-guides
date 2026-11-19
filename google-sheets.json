@@ -2,7 +2,7 @@
   "app": "google-sheets",
   "name": "Google Sheets",
   "kind": "web",
-  "domainHints": ["docs.google.com", "sheets.google.com"],
+  "domainHints": ["docs.google.com/spreadsheets", "sheets.google.com"],
   "shortcuts": {
     "select_column": "ctrl+Space",
     "select_row": "shift+Space",

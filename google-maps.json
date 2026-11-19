@@ -2,7 +2,7 @@
   "app": "google-maps",
   "name": "Google Maps",
   "kind": "web",
-  "domainHints": ["maps.google.com"],
+  "domainHints": ["www.google.com/maps", "maps.google.com"],
   "shortcuts": {
     "pan_up": "Up",
     "pan_down": "Down",
