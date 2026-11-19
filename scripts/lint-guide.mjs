@@ -311,7 +311,8 @@ export function lintGuide(raw, fileName) {
     return { ok: false, findings };
   }
 
-  if (Array.isArray(raw.domainHints)) {
+  // v1 only: a v2 guide's hints (path prefixes, "*." subdomains) are checked by lintV2.
+  if (Array.isArray(raw.domainHints) && raw.kind === undefined) {
     for (let i = 0; i < raw.domainHints.length; i++) {
       const h = raw.domainHints[i];
       if (typeof h !== 'string') {

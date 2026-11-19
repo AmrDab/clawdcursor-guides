@@ -24,16 +24,38 @@ uploaded or fetched from the network.
 <!-- guides-table:start -->
 | App | Kind | Platform | Shortcuts | Workflows | Tips | Verified |
 |---|---|---|---|---|---|---|
-| [discord](./discord.json) | – | all | 27 | – | 2 | – |
-| [excel](./excel.json) | – | all | 122 | 6 | 12 | – |
-| [figma](./figma.json) | – | all | 116 | – | 2 | – |
-| [Gmail](./gmail.json) | – | all | 14 | 4 | 4 | – |
-| [mspaint](./mspaint.json) | – | all | 11 | 7 | 6 | – |
-| [olk](./olk.json) | – | all | 7 | 4 | 4 | – |
-| [Outlook](./outlook.json) | – | all | 9 | 2 | 4 | – |
-| [Slack](./slack.json) | – | all | 9 | 2 | 3 | – |
-| [spotify](./spotify.json) | – | all | 23 | – | 2 | – |
-| [YouTube](./youtube.json) | – | all | 39 | 19 | 13 | – |
+| [Google Chrome](./chrome.json) | desktop | Windows, macOS, Linux | 60 | 3 | 8 | 2026-11-18 |
+| [Discord](./discord.json) | desktop | Windows | 31 | 1 | 4 | 2026-11-18 |
+| [Microsoft Edge](./edge.json) | desktop | Windows, macOS | 64 | 2 | 7 | 2026-11-18 |
+| [Microsoft Excel](./excel.json) | desktop | Windows, macOS | 121 | 4 | 8 | 2026-11-18 |
+| [Figma](./figma.json) | desktop | all | 46 | 2 | 8 | 2026-11-18 |
+| [File Explorer](./file-explorer.json) | desktop | Windows | 41 | 3 | 6 | 2026-11-18 |
+| [Finder](./finder.json) | desktop | macOS | 54 | 2 | 6 | 2026-11-18 |
+| [GitHub](./github.json) | web | all | 70 | 3 | 7 | 2026-11-18 |
+| [Gmail](./gmail.json) | web | all | 84 | 3 | 8 | 2026-11-18 |
+| [Google Calendar](./google-calendar.json) | web | all | 21 | 1 | 6 | 2026-11-18 |
+| [Google Docs](./google-docs.json) | web | all | 133 | 1 | 12 | 2026-11-18 |
+| [Google Drive](./google-drive.json) | web | all | 61 | 1 | 7 | 2026-11-18 |
+| [Google Maps](./google-maps.json) | web | all | 13 | – | 6 | 2026-11-18 |
+| [Google Sheets](./google-sheets.json) | web | all | 92 | 3 | 10 | 2026-11-18 |
+| [Jira](./jira.json) | web | all | 27 | 1 | 5 | 2026-11-18 |
+| [Linear](./linear.json) | web | all | 66 | 3 | 9 | 2026-11-18 |
+| [LinkedIn](./linkedin.json) | web | all | 17 | 2 | 6 | 2026-11-18 |
+| [Paint](./mspaint.json) | desktop | Windows | 9 | 4 | 5 | 2026-11-18 |
+| [Notion](./notion.json) | desktop | all | 53 | 2 | 9 | 2026-11-18 |
+| [Outlook (new)](./olk.json) | desktop | Windows | 37 | 2 | 8 | 2026-11-18 |
+| [Outlook (classic)](./outlook.json) | desktop | Windows | 54 | 3 | 8 | 2026-11-18 |
+| [Microsoft PowerPoint](./powerpoint.json) | desktop | Windows, macOS | 96 | 2 | 7 | 2026-11-18 |
+| [Reddit](./reddit.json) | web | all | 25 | 1 | 6 | 2026-11-18 |
+| [Slack](./slack.json) | desktop | all | 63 | 2 | 9 | 2026-11-18 |
+| [Spotify](./spotify.json) | desktop | all | 28 | 1 | 3 | 2026-11-18 |
+| [Microsoft Teams](./teams.json) | desktop | Windows, macOS | 71 | 3 | 8 | 2026-11-18 |
+| [Trello](./trello.json) | web | all | 46 | 3 | 8 | 2026-11-18 |
+| [Visual Studio Code](./vscode.json) | desktop | Windows, macOS, Linux | 114 | 4 | 9 | 2026-11-18 |
+| [WhatsApp Web](./whatsapp-web.json) | web | all | 15 | – | 3 | 2026-11-18 |
+| [Microsoft Word](./word.json) | desktop | Windows, macOS | 118 | 4 | 8 | 2026-11-18 |
+| [X](./x-com.json) | web | all | 25 | 3 | 5 | 2026-11-18 |
+| [YouTube](./youtube.json) | web | all | 34 | 1 | 8 | 2026-11-18 |
 <!-- guides-table:end -->
 
 Regenerate this table with `node scripts/readme-table.mjs`. See
