@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - '*.json'
-      - 'scripts/lint-guide.mjs'
+      - 'scripts/**'
       - '.github/workflows/validate.yml'
   push:
     branches: [main]
@@ -24,6 +24,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Test the linter
+        run: node --test scripts/*.test.mjs
 
       - name: Determine changed guides
         id: changed

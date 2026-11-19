@@ -20,7 +20,7 @@ Before submitting, please:
 - [ ] File is at the repo root (`<app>.json`), not in a subdirectory.
 - [ ] `app` field is lowercase, no spaces (matches the filename).
 - [ ] `node scripts/lint-guide.mjs <file>` passes locally.
-- [ ] Workflows are prose hints, not rigid step machines (unless the steps are genuinely deterministic).
+- [ ] Shortcuts were checked against the pages listed in `sources`, and `lastVerified` is today.
 - [ ] Tips cover real failure modes — what trips the agent up, not just nice-to-knows.
 - [ ] No content tells the agent to perform unconditional destructive / financial actions.
 - [ ] No content includes "ignore previous instructions" or similar prompt-injection patterns.
@@ -29,8 +29,8 @@ Before submitting, please:
 
 <!--
 Maintainers will apply a label after review:
-  trust:verified     — fetched by default. ~12 guides at launch.
-  trust:community    — vetted PR, available with opt-in.
-  trust:experimental — un-vetted, opt-in only.
+  trust:verified     — included in the pack clawdcursor ships.
+  trust:community    — vetted PR, not shipped by default.
+  trust:experimental — un-vetted.
 Don't add the label yourself.
 -->

@@ -1,0 +1,48 @@
+name: Guide suggestion
+description: Send a guide that an agent drafted for an app, for maintainer review.
+title: 'Guide suggestion: <app>'
+labels: [guide-suggestion]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to send a guide that an agent drafted and that you chose
+        to share. A maintainer reviews every suggestion: the JSON must pass
+        `node scripts/lint-guide.mjs`, and the shortcuts are checked against
+        the app's official documentation or the app itself before anything is
+        committed. Suggestions that cannot be verified are closed.
+
+        Check the JSON for anything private before pasting it. For the format,
+        see the [README](https://github.com/AmrDab/clawdcursor-guides#schema-v2).
+
+  - type: input
+    id: app
+    attributes:
+      label: App
+      description: The app's name and, if you know it, the `app` id the guide uses (lowercase, e.g. `gmail`).
+      placeholder: Gmail (gmail)
+    validations:
+      required: true
+
+  - type: textarea
+    id: guide
+    attributes:
+      label: Guide JSON
+      description: The full contents of the guide file.
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: seen
+    attributes:
+      label: Where the shortcuts were seen
+      description: Help pages (URLs) or the app itself, and the version of the app you checked, for example "Excel 16.0 on Windows 11" or "Gmail in Chrome, 2026-11".
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Anything a reviewer should know, such as keys that differ between operating systems.
