@@ -56,6 +56,7 @@
     "delete_permanently",
     "close_window"
   ],
+  "essentials": ["focus_address_bar", "focus_search_box", "new_folder", "rename", "up_one_level", "back", "new_tab", "refresh"],
   "workflows": {
     "go_to_path": {
       "name": "open a folder by its path",

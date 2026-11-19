@@ -94,6 +94,7 @@
     "mark_all_messages_read",
     "toggle_huddle"
   ],
+  "essentials": ["quick_switcher", "compose_new_message", "search", "open_all_unreads_view", "open_threads_view", "next_unread_conversation", "browse_channels", "upload_file"],
   "workflows": {
     "jump_to_conversation": {
       "name": "jump to a channel or DM",

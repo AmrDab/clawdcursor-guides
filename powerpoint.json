@@ -103,6 +103,7 @@
     "help": "F1"
   },
   "consequential": ["close_presentation", "quit_powerpoint"],
+  "essentials": ["new_slide", "next_slide", "previous_slide", "select_next_object", "edit_text_in_selected_object", "duplicate_slide", "save", "start_slide_show"],
   "workflows": {
     "find_text": {
       "name": "find text in the presentation",

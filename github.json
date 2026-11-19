@@ -87,6 +87,7 @@
     "notification_mark_done",
     "notification_unsubscribe"
   ],
+  "essentials": ["focus_search_bar", "go_to_issues_tab", "go_to_pull_requests_tab", "go_to_code_tab", "file_finder", "create_issue", "submit_comment", "go_to_notifications"],
   "workflows": {
     "find_file_in_repository": {
       "name": "open a file in the current repository by name",

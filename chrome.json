@@ -156,6 +156,7 @@
     "close_window",
     "quit_chrome"
   ],
+  "essentials": ["focus_address_bar", "new_tab", "next_tab", "previous_tab", "back", "find_on_page", "reopen_closed_tab", "open_downloads"],
   "workflows": {
     "open_url_in_new_tab": {
       "name": "open a web address in a new tab",

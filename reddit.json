@@ -42,6 +42,7 @@
     "downvote",
     "hide_post"
   ],
+  "essentials": ["next_post_or_comment", "previous_post_or_comment", "expand_or_collapse_content", "create_post", "reply_to_comment", "submit_comment_or_post", "toggle_navigation", "save_or_unsave"],
   "workflows": {
     "reply_to_selected_comment": {
       "name": "reply to the comment selected with j or k",

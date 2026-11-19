@@ -69,6 +69,7 @@
     "create_component": "mod+alt+k",
     "resize_frame_to_fit_contents": "mod+alt+shift+r"
   },
+  "essentials": ["open_actions_menu", "frame_tool", "rectangle_tool", "text_tool", "select_child_layer", "select_next_sibling", "zoom_to_fit", "zoom_to_selection"],
   "workflows": {
     "run_action_by_name": {
       "name": "run a command, tool or plugin by name",

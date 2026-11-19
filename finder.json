@@ -70,6 +70,7 @@
     "move_copied_items_here",
     "eject"
   ],
+  "essentials": ["go_to_folder", "new_folder", "open_selected_item", "open_enclosing_folder", "find", "go_downloads", "get_info", "back"],
   "workflows": {
     "go_to_folder": {
       "name": "open a folder by its path",

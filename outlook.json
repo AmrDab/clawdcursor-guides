@@ -61,6 +61,7 @@
     "open_split_button": "alt+Down"
   },
   "consequential": ["send", "send_alt", "delete_item", "delete_and_ignore_conversation"],
+  "essentials": ["new_message", "send", "search", "go_to_inbox", "reply", "forward", "calendar_view", "attach_file"],
   "workflows": {
     "compose_and_send": {
       "name": "compose and send an email",

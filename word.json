@@ -125,6 +125,7 @@
     "cancel": "Escape"
   },
   "consequential": ["close_document", "quit_word"],
+  "essentials": ["save", "document_end", "document_start", "go_to", "replace", "apply_heading_1", "apply_normal_style", "insert_page_break"],
   "workflows": {
     "find_text": {
       "name": "find text in the document",

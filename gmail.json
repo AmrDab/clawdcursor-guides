@@ -90,6 +90,7 @@
     "open_shortcut_help": "?"
   },
   "consequential": ["send", "delete", "report_spam", "discard_draft"],
+  "essentials": ["compose", "send", "search_mail", "go_to_inbox", "older_conversation", "open_conversation", "reply", "archive"],
   "workflows": {
     "compose_and_send": {
       "name": "compose and send an email",

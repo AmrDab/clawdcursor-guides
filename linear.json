@@ -84,6 +84,7 @@
     "triage_decline",
     "triage_mark_duplicate"
   ],
+  "essentials": ["open_command_menu", "create_issue", "search_workspace", "go_to_my_issues", "go_to_inbox", "next_item_in_list", "open_assignee_menu", "post_comment"],
   "workflows": {
     "open_issue_by_id": {
       "name": "open an issue by its ID or title",

@@ -46,6 +46,7 @@
     "answer_incoming_call",
     "mark_server_as_read"
   ],
+  "essentials": ["find_or_start_direct_message", "next_channel", "previous_channel", "next_unread_channel", "next_server", "focus_text_area", "upload_file", "toggle_mentions_popout"],
   "workflows": {
     "jump_to_dm_or_channel": {
       "name": "open a direct message, channel or server by name",

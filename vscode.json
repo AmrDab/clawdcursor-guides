@@ -213,6 +213,7 @@
     "close_all_editors",
     "close_folder"
   ],
+  "essentials": ["command_palette", "quick_open_file", "go_to_line", "search_in_files", "toggle_terminal", "save", "show_explorer", "go_to_symbol_in_file"],
   "workflows": {
     "open_file_by_name": {
       "name": "open a file in the workspace by name",

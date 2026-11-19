@@ -44,6 +44,7 @@
     "calendar_switch_region": "F6"
   },
   "consequential": ["send", "delete_item", "delete_permanently"],
+  "essentials": ["new_message_or_event", "send", "reply", "forward", "next_message", "previous_message", "go_to_calendar", "go_to_folder_pane"],
   "workflows": {
     "compose_and_send": {
       "name": "compose and send an email",

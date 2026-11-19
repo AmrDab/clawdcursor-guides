@@ -50,6 +50,7 @@
   "consequential": [
     "log_out"
   ],
+  "essentials": ["open_search", "play_or_pause", "go_to_home", "go_to_library", "go_to_liked_songs", "go_to_queue", "like_current_song", "toggle_shuffle"],
   "workflows": {
     "search_spotify": {
       "name": "search for a song, artist, album or playlist",

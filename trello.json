@@ -56,6 +56,7 @@
   "consequential": [
     "archive_card"
   ],
+  "essentials": ["focus_search_box", "open_boards_menu", "select_card_below", "select_card_right", "open_selected_card", "insert_card_after_selected", "save_text", "set_due_date"],
   "workflows": {
     "open_board_by_name": {
       "name": "switch to another board",

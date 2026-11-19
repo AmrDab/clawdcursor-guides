@@ -29,6 +29,7 @@
     "like_post",
     "repost"
   ],
+  "essentials": ["search", "new_post", "go_home", "go_messaging", "go_notifications", "go_jobs", "next_feed_post", "comment_on_post"],
   "workflows": {
     "search": {
       "name": "search LinkedIn",

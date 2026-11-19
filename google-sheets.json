@@ -98,6 +98,7 @@
     "resize_formula_bar_down": { "default": "ctrl+Down", "darwin": "ctrl+alt+Down" }
   },
   "consequential": ["open_delete_menu"],
+  "essentials": ["tool_finder", "go_to_sheet_start", "go_to_sheet_end", "next_sheet", "insert_new_sheet", "paste_values_only", "insert_rows_below", "find_and_replace"],
   "workflows": {
     "insert_row_above": {
       "name": "insert a row above the current row",

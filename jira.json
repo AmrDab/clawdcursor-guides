@@ -32,6 +32,7 @@
     "editor_indent_list_item": "Tab",
     "editor_outdent_list_item": "shift+Tab"
   },
+  "essentials": ["create_work_item", "next_work_item", "previous_work_item", "open_selected_work_item", "add_comment", "assign_work_item_to_me", "assign_work_item", "next_column"],
   "workflows": {
     "comment_on_selected_work_item": {
       "name": "start a comment on the selected or open work item",

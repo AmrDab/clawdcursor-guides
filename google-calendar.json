@@ -27,6 +27,7 @@
     "open_shortcut_help": "?"
   },
   "consequential": ["delete_event", "save_event"],
+  "essentials": ["create_event", "save_event", "go_to_date", "go_to_today", "focus_search", "next_date_range", "open_event_details", "week_view"],
   "workflows": {
     "create_event": {
       "name": "create an event",

@@ -103,6 +103,7 @@
   "consequential": [
     "delete_selected_blocks"
   ],
+  "essentials": ["open_search", "new_page", "go_back", "go_up_one_page_level", "open_block_actions_menu", "turn_into_heading_1", "turn_into_to_do", "select_current_block"],
   "workflows": {
     "jump_to_page": {
       "name": "open a page by name",

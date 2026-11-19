@@ -67,6 +67,7 @@
     "preview_zoom_out": "-"
   },
   "consequential": ["remove_selected"],
+  "essentials": ["search_drive", "go_to_items_view", "open_selected", "new_folder", "new_document", "upload_file", "rename_selected", "share_selected"],
   "workflows": {
     "search": {
       "name": "search Drive",

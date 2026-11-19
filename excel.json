@@ -128,6 +128,7 @@
     "help": "F1"
   },
   "consequential": ["close_workbook", "quit_excel", "delete_column"],
+  "essentials": ["go_to", "edit_cell", "save", "go_to_sheet_start", "move_to_data_edge_down", "move_to_data_edge_right", "next_sheet", "format_cells_dialog"],
   "workflows": {
     "find_value": {
       "name": "find a value on the sheet",

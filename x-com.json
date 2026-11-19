@@ -40,6 +40,7 @@
     "mute_account",
     "block_account"
   ],
+  "essentials": ["new_post", "send_post", "search", "go_home", "go_notifications", "next_post", "reply", "go_messages"],
   "workflows": {
     "write_post": {
       "name": "write and send a post",

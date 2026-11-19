@@ -68,6 +68,7 @@
     "archive_chat",
     "lock_screen"
   ],
+  "essentials": ["new_chat", "search_chat", "extended_search", "new_group", "close_chat", "mark_chat_as_unread", "pin_chat", "open_profile_and_about"],
   "tips": [
     "All keys of a shortcut are pressed together.",
     "The vendor lists keys for Windows and Mac only; the Windows keys are given here as the default for other systems.",

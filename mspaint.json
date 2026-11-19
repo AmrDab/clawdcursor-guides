@@ -22,6 +22,7 @@
   "consequential": [
     "close_window"
   ],
+  "essentials": ["undo", "select_all", "cancel"],
   "workflows": {
     "draw_freehand": "Pick the Pencil in the Tools group, then drag on the canvas to draw.",
     "draw_shape": "Pick a shape in the Shapes group (line, rectangle, ellipse, triangle and so on), then drag on the canvas to place it; drag its handles to resize.",

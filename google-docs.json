@@ -138,6 +138,7 @@
     "focus_popup": { "default": "ctrl+alt+e ctrl+alt+p", "darwin": "ctrl+cmd+e ctrl+cmd+p" },
     "focus_out_of_document": "mod+alt+shift+m"
   },
+  "essentials": ["tool_finder", "go_to_document_end", "go_to_document_start", "find_and_replace", "heading_1", "normal_text", "insert_comment", "paste_without_formatting"],
   "workflows": {
     "run_menu_command": {
       "name": "run any menu command with the tool finder",

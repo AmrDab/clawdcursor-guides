@@ -148,6 +148,7 @@
     "end_call",
     "admit_people_from_lobby_notification"
   ],
+  "essentials": ["go_to_search", "go_to_chat_or_channel", "start_new_chat", "go_to_compose_box", "focus_chat_and_channel_list", "attach_file", "schedule_meeting", "toggle_mute"],
   "workflows": {
     "go_to_chat_or_channel": {
       "name": "open a chat or channel by name",

@@ -39,6 +39,7 @@
     "previous_chapter": { "default": "ctrl+Left", "darwin": "alt+Left" },
     "open_shortcut_help": "?"
   },
+  "essentials": ["focus_search", "play_pause", "mute_unmute", "fullscreen_toggle", "seek_forward_10s", "seek_back_10s", "captions_toggle", "next_video"],
   "workflows": {
     "search": {
       "name": "search for videos",
