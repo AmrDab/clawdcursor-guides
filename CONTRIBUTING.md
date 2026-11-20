@@ -1,8 +1,13 @@
 # Contributing a guide
 
-A clawdcursor guide is a JSON file at this repo's root that teaches the
-agent how to operate a specific app quickly. This doc covers the schema,
-the linter rules, and the PR flow.
+A clawdcursor guide is a JSON file at this repo's root that gives an agent
+the verified facts about one app: its keyboard shortcuts, a few workflows,
+and the quirks that are easy to miss. This doc covers the format, the linter
+rules, and the review flow.
+
+clawdcursor ships the verified guides inside its package and refreshes the
+whole pack together. An agent reads a guide with
+`system shortcuts_list {"context":"<app>"}`.
 
 ## Quickstart
 
@@ -11,8 +16,7 @@ the linter rules, and the PR flow.
 git clone https://github.com/<you>/clawdcursor-guides
 cd clawdcursor-guides
 
-# 2. Write your guide (see schema below)
-cp youtube.json myapp.json
+# 2. Write your guide (see the format below)
 $EDITOR myapp.json
 
 # 3. Lint locally
@@ -23,105 +27,82 @@ git checkout -b add-myapp
 git add myapp.json
 git commit -m "add myapp guide"
 git push origin add-myapp
-# Open PR via GitHub UI
 ```
 
-## Schema
+## Format (v2)
 
-The guide must conform to clawdcursor's `AppGuide` interface
-([source](https://github.com/AmrDab/clawdcursor/blob/main/src/core/pipeline-types.ts)):
+The contract is
+[guide-format-v2](https://github.com/AmrDab/clawdcursor/blob/main/tasks/guide-format-v2.md);
+the field table and two short examples are in the [README](./README.md#schema-v2).
+In short:
 
-```jsonc
-{
-  // Required. The app key. Lowercase, no spaces. Matches the filename.
-  "app": "youtube",
+- `app` (equal to the file name), `name`, `kind` (`web` or `desktop`),
+  `shortcuts`, `sources` and `lastVerified` are required.
+- Web guides need `domainHints` (bare hostnames). Desktop guides need
+  `processNames` (no `.exe`). `os` is optional.
+- Shortcut names are readable snake_case, at most 48 characters, and say what
+  the key does (`go_to_inbox`, not `g_i`).
+- A chord is a string such as `"mod+shift+z"`, or an object per OS:
+  `{ "default": "...", "darwin": "...", "win32": "...", "linux": "..." }`
+  where `""` means the key does not exist on that OS. Use `mod` whenever the
+  app uses Ctrl on Windows and Cmd on macOS.
+- `consequential` lists the shortcuts that send, post, delete, pay, close or
+  otherwise act in a way that is hard to undo.
+- At most 150 shortcuts, 20 workflows, 12 tips (240 characters each), 64 KB
+  per file.
 
-  // Optional. Human-readable name. Defaults to `app` if omitted.
-  "name": "YouTube",
+## Authoring rules
 
-  // Optional. Hostnames the agent will see when this app is active.
-  // Bare domains only — no https://, no paths.
-  "domainHints": ["youtube.com", "www.youtube.com"],
-
-  // Optional. Keyboard shortcuts. Use "mod" for the platform-correct
-  // modifier (Cmd on macOS / Ctrl elsewhere); the agent normalizes.
-  "shortcuts": {
-    "focus_search": "/",
-    "play_pause":   "k",
-    "save":         "mod+s"
-  },
-
-  // Optional. Named workflows. EITHER a prose string OR a structured
-  // AppWorkflow object with typed steps. Mix and match — most guides
-  // use prose because the agent reasons from it.
-  "workflows": {
-    "search_and_play": "Press / to focus the search bar. Type the query. Press Enter. Click the first result.",
-    "compose_and_send": {
-      "name": "Compose and send",
-      "steps": [
-        { "type": "pressKey", "key": "c" },
-        { "type": "typeAtFocus", "field": "to" },
-        { "type": "pressKey", "key": "mod+Return" }
-      ]
-    }
-  },
-
-  // Optional. Named UI regions. Helps the agent navigate without a screenshot.
-  "layout": {
-    "top_bar": "Logo on the left, search center, account avatar on the right.",
-    "left_sidebar": "Home / Shorts / Subscriptions / History..."
-  },
-
-  // Optional. Free-form tips. THE most useful field for richness — put
-  // failure modes, gotchas, version-specific quirks, ad-blocker
-  // interactions, anything the agent would normally have to discover
-  // by failing first.
-  "tips": [
-    "Ad-blocker prompts appear before the video. Wait for the 'Skip Ad' button at 5s.",
-    "Single-letter shortcuts (k, m, f) only fire when the search box is NOT focused."
-  ]
-}
-```
-
-## Authoring philosophy
-
-**Guides are HINTS, not scripts.** The agent always reasons; the guide just
-gives it better starting context. Three rules:
-
-1. **Multi-task, not single-purpose.** A YouTube guide should cover playing,
-   queuing, subscribing, captioning, fullscreening, sharing — not just one
-   action. The agent picks what fits the task.
-
-2. **Prose over rigid steps.** "Press `/` to focus the search box. Type the
-   query. Enter." reads naturally and lets the agent adapt. Use structured
-   `steps` only when the sequence is genuinely deterministic and a future
-   template runner could execute it.
-
-3. **Tips are where richness lives.** The agent's training already knows
-   most apps superficially. What it doesn't know is the *gotchas*:
-   ad-blocker modals, age gates, mobile redirects, Sponsored labels, what
-   "Topic" channels are. Front-load these.
+1. **Facts, in your own words.** Do not copy a help page's prose. Record what
+   a key does, and list the help pages you checked in `sources`.
+2. **Verify.** `lastVerified` is the day you checked the shortcuts against
+   `sources` (or on the app itself). Do not list shortcuts you have not
+   checked.
+3. **Say what the app does, not what the agent should do.** Tips are facts
+   about operating the app: modes, settings that change a key, things that
+   look alike. Do not write instructions that tell an agent to skip a
+   confirmation or to act without asking.
+4. **Cover several tasks.** A guide that only handles one action is of little
+   use; include the common navigation, editing and sending keys.
+5. **No mention of other AI products or agents.**
 
 ## Linter rules
 
-`scripts/lint-guide.mjs` runs on every PR via `.github/workflows/validate.yml`
-and **identical rules run in the clawdcursor binary at fetch time**. A guide
-that passes CI but fails the client is dead weight — every install would
-silently drop it. So the linter rejects:
+`scripts/lint-guide.mjs` runs on every PR via `.github/workflows/validate.yml`,
+and clawdcursor re-runs the same checks when it builds its pack.
+
+A guide with a `kind` field is checked as v2. A guide without one is a v1
+guide that has not been migrated yet and only gets warnings.
 
 ### Schema (`schema.*`)
 
-- `app` missing or not a string
-- `name`, `shortcuts`, `workflows`, `layout`, `learnedWorkflows` wrong type
-- `tips`, `domainHints` not arrays
-- `domainHints` entries that look like URLs (`https://...`) or paths (`/foo`)
-- Total file size > 64 KB
+- `app` not `[a-z0-9-]{2,32}`, or not equal to the file name
+- `name`, `kind`, `shortcuts`, `sources`, `lastVerified` missing or malformed
+- `os` with values other than `win32`, `darwin`, `linux`
+- web guide without `domainHints`, or a hint that is a URL or path
+- desktop guide without `processNames`, or a name ending in `.exe`
+- shortcut names that are not snake_case or exceed 48 characters
+- `consequential` entries that are not keys of `shortcuts`
+- more than 12 tips, a tip over 240 characters, a `sources` entry that is not
+  an https URL, a `lastVerified` that is not a real `YYYY-MM-DD` date
+- more than 150 shortcuts or 20 workflows, or a file over 64 KB
+- workflow steps with an unknown `type`
+
+### Chords (`chord.grammar`)
+
+- tokens joined by `+` with no spaces; a sequence uses exactly one space
+- modifiers are `mod`, `ctrl`, `shift`, `alt`, `cmd`, lowercase, not repeated;
+  `cmd` only in a `darwin` chord
+- keys are a single lowercase character, or a named key exactly as written:
+  `Return`, `Tab`, `Escape`, `Space`, `Backspace`, `Delete`, `Up`, `Down`,
+  `Left`, `Right`, `Home`, `End`, `PageUp`, `PageDown`, `F1`-`F12`
+- write a shifted letter as `shift+u`, not `U`
 
 ### Prompt injection (`inject.*`)
 
-The agent injects the guide verbatim into its system prompt. Anything that
-looks like an attempt to override instructions, reveal hidden state, or
-masquerade as the system gets rejected:
+The agent reads guide text as part of its context. Anything that looks like
+an attempt to override instructions, reveal hidden state, or masquerade as the
+system is rejected:
 
 - "Ignore previous instructions"
 - "Disregard the safety / guardrails / rules"
@@ -134,8 +115,8 @@ masquerade as the system gets rejected:
 ### Dangerous prose (`danger.*`)
 
 Apps legitimately have delete buttons and Send buttons. The linter only
-flags *unconditional* instructions to perform destructive / financial / non-
-confirmed actions:
+flags *unconditional* instructions to perform destructive, financial or
+unconfirmed actions:
 
 - "Always delete / remove / wipe / format"
 - "Automatically transfer / send / wire money / funds / crypto"
@@ -143,50 +124,66 @@ confirmed actions:
 - "Do not / don't / never / without ask / confirm / verify / check / prompt"
 - `rm -rf`
 
-The linter never flags single high-risk words. "Press Delete to remove the
-character under the cursor" is fine; "Always delete email after reading"
-is not.
+Single high-risk words are never flagged. "Press Delete to remove the
+character under the cursor" is fine; "Always delete email after reading" is
+not.
 
 ## Local development
 
 ```bash
-# Lint a single guide
+# Lint one guide, or all of them
 node scripts/lint-guide.mjs youtube.json
+node scripts/lint-guide.mjs $(ls *.json | grep -v '^index.json$')
 
-# Lint everything
-node scripts/lint-guide.mjs *.json
+# Run the linter's tests
+node --test scripts/*.test.mjs
 
-# Rebuild the index locally (mostly for the maintainer; CI does this nightly)
-GITHUB_TOKEN=ghp_xxx node scripts/aggregate-index.mjs
+# Refresh the README guide table after adding or changing a guide
+node scripts/readme-table.mjs
+
+# Rebuild the index locally (mostly for maintainers; CI does this nightly)
+GITHUB_TOKEN=... node scripts/aggregate-index.mjs
 ```
 
-## Review SLA
+## Suggesting a guide drafted by an agent
+
+If an agent drafted a guide for your app and you want to share it, open a
+[Guide suggestion](https://github.com/AmrDab/clawdcursor-guides/issues/new?template=guide-suggestion.yml) issue.
+Nothing is sent from your machine automatically; you decide what to paste.
+The form asks for:
+
+- the app,
+- the guide JSON,
+- where the shortcuts were seen (help page, or the app itself, and the app
+  version).
+
+A maintainer reviews each suggestion: it must pass the linter, and the
+shortcuts are checked against the official documentation or the app. If it
+passes, a maintainer commits `<app>.json` with `lastVerified` set to the
+review date and the pages checked in `sources`. If it cannot be verified, the
+issue is closed with a note. Suggestions are never merged unreviewed.
+
+## Review
 
 - Initial response within 7 days.
 - Trust label applied at merge:
-  - `trust:verified`     — curated, fetched by default
-  - `trust:community`    — vetted but opt-in
-  - `trust:experimental` — un-vetted, opt-in by name only
-- Merged PR triggers the `aggregate-index` workflow on its next nightly
-  run; the new guide appears in `clawdcursor guides available` within 24h.
+  - `trust:verified`     — curated; included in the pack clawdcursor ships
+  - `trust:community`    — vetted, not shipped by default
+  - `trust:experimental` — un-vetted
+- Guides appear in the next pack clawdcursor builds after the merge.
 
 ## Editing an existing guide
 
-Edits go through the same PR flow. If the change is small (a typo, a single
-shortcut update), `trust:verified` is preserved automatically. Larger
-changes may trigger a re-review.
-
-If you're fixing something broken in the wild, link the user-reported
-issue (file via `Report a broken guide`) in your PR. Maintainers prioritize
-those.
+Edits go through the same PR flow. Update `lastVerified` whenever you
+re-check the shortcuts. If you are fixing something broken in the wild, link
+the issue (file one via `Report a broken guide`) in your PR.
 
 ## Removing a guide
 
-Open a PR deleting the file with a one-line summary. The vote-issue stays
-open (so prior reactions survive history) but the guide stops appearing in
-`index.json` on the next aggregation.
+Open a PR deleting the file with a one-line summary. The vote issue stays
+open so prior reactions survive, but the guide drops out of `index.json` on
+the next aggregation.
 
 ## Code of conduct
 
-Be kind. Be specific. Test your guides on a real install before submitting.
-That's it.
+Be kind. Be specific. Check your guides on the real app before submitting.
