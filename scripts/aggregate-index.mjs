@@ -56,11 +56,22 @@ async function ghApi(path, opts = {}) {
   return res.json();
 }
 
+// Vote issues are seeded by maintainers; anyone else can open an issue with
+// the same title, so only count issues authored by the repo's own people.
+const TRUSTED_AUTHORS = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
 async function listVoteIssues() {
-  // GET /repos/{owner}/{repo}/issues?labels=vote&state=open&per_page=100
-  // Falls back to title filter if no `vote` label is in use.
-  const issues = await ghApi(`/repos/${REPO}/issues?state=all&per_page=100`);
-  return issues.filter(i => typeof i.title === 'string' && i.title.toLowerCase().startsWith('vote:'));
+  // GET /repos/{owner}/{repo}/issues?state=all, oldest first, all pages.
+  const issues = [];
+  for (let page = 1; ; page++) {
+    const batch = await ghApi(`/repos/${REPO}/issues?state=all&sort=created&direction=asc&per_page=100&page=${page}`);
+    issues.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return issues.filter(i =>
+    !i.pull_request &&
+    TRUSTED_AUTHORS.has(i.author_association) &&
+    typeof i.title === 'string' && i.title.toLowerCase().startsWith('vote:'));
 }
 
 async function reactionsFor(issueNumber) {
@@ -117,9 +128,12 @@ async function main() {
   // 2. Walk vote issues to overlay trust + ratings.
   try {
     const issues = await listVoteIssues();
+    const seen = new Set();
     for (const issue of issues) {
       const app = appFromTitle(issue.title);
-      if (!app || !guides[app]) continue;
+      // First (oldest) vote issue per guide wins; later duplicates are ignored.
+      if (!app || !Object.hasOwn(guides, app) || seen.has(app)) continue;
+      seen.add(app);
       const { up, down } = await reactionsFor(issue.number);
       guides[app].upvotes = up;
       guides[app].downvotes = down;
